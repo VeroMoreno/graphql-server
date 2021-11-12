@@ -22,7 +22,15 @@ node index.js
 ```
 
 ### Dependencies
-````
+```
 "apollo-server": "^3.5.0",
 "graphql": "^15.7.2"
+"uuid": "^8.3.2" // Generate id for each user
 ```
+
+#### Querys
+With querys we can get data from the server
+
+#### Mutation
+With mutation we can create, update and delete data.
+  - Validation (Error handling) UserInputError from apollo-server

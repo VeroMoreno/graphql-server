@@ -1,4 +1,5 @@
-import { ApolloServer, gql } from 'apollo-server';
+import { ApolloServer, gql, UserInputError } from 'apollo-server';
+import {v1 as uuid} from 'uuid'
 
 // Datos para las consultas en GraphQL
 const persons = [
@@ -38,6 +39,15 @@ const typeDefs = gql`
     allPersons: [Person]!
     findPerson(name: String!): Person
   }
+
+  type Mutation {
+    addPerson(
+      name: String!
+      phone: String
+      street: String!
+      city: String!
+    ): Person
+  }
 `
 // describimos las peticiones con type query
 // ¿Como coge el nombre si no se lo indicamos en la query? GraphQL Magic!.
@@ -49,6 +59,19 @@ const resolvers = {
     findPerson: (root, args) => {
       const {name} = args;
       return persons.find(person => person.name === name)
+    }
+  },
+  Mutation : {
+    addPerson: (root, args) => {
+      if (persons.find(p => p.name === args.name)) {
+        throw new UserInputError('Person already exists', {
+          invalidArgs: args.name
+        })
+      }
+      // const { name, phone, street, city } = args;
+      const person = {...args, id: uuid()}
+      persons.push(person) // update database with new person
+      return person
     }
   },
   Person: {
