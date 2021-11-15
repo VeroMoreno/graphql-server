@@ -29,8 +29,12 @@ node index.js
 ```
 
 #### Querys
-With querys we can get data from the server
+With querys we can GET data from the server
+- enum Type (to get a piece of information, for example a user who has a specific phone)
 
 #### Mutation
 With mutation we can create, update and delete data.
-  - Validation (Error handling) UserInputError from apollo-server
+  - Create a new user (addPerson)
+    - Validation (Error handling) UserInputError from apollo-server
+
+  - Update phoneNumber of an user (editNumber and later updatePerson)

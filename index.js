@@ -51,6 +51,10 @@ const typeDefs = gql`
       street: String!
       city: String!
     ): Person
+    editNumber(
+      name: String!
+      phone: String!
+    ): Person
   }
 `
 // describimos las peticiones con type query
@@ -82,6 +86,20 @@ const resolvers = {
       const person = {...args, id: uuid()}
       persons.push(person) // update database with new person
       return person
+    },
+    editNumber: (root, args) => {
+      // recuperamos la persona que tenga el nombre que le pasamos por argumento
+      // recuperamos el indice
+      const personIndex = persons.findIndex(p => p.name === args.name)
+      // si indice es -1 es que no la hemos encontrado
+      if (!personIndex === -1) return null // si algo no existe SIEMPRE devolvemos null.
+      // si existe, recuperamos esta persona del array usando indice
+      const person = persons[personIndex]
+      // almacenamos ...TODAS las propiedades de esta persona, pero el telefono el que le pasamos por parámetro
+      const updatedPerson = {...person, phone: args.phone}
+      // en esa posicion donde hemos encontrado la persona le asignamos el updatePerson.
+      persons[persons.indexOf(person)] = updatedPerson
+      return updatedPerson
     }
   },
   Person: {
