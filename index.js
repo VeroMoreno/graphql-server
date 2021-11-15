@@ -1,5 +1,6 @@
 import { ApolloServer, gql, UserInputError } from 'apollo-server';
 import {v1 as uuid} from 'uuid'
+import axios from 'axios';
 
 // Datos para las consultas en GraphQL
 const persons = [
@@ -62,11 +63,14 @@ const typeDefs = gql`
 const resolvers = {
   Query: {
     personCount: () => persons.length,
-    allPersons: (root, args) => {
-      if (!args.phone) return persons
+    allPersons: async (root, args) => {
+
+      const { data : personsFromAPI } = await axios.get('http://localhost:3000/persons');
+
+      if (!args.phone) return personsFromAPI;
       const byPhone = person =>
         args.phone === "YES" ? person.phone : !person.phone
-        return persons.filter(byPhone)
+        return personsFromAPI.filter(byPhone)
       //  return persons.filter(person =>  args.phone === "YES" ? person.phone : !person.phone)
     },
     // Root es lo que se ha resuelto antes. Root seria el propio objeto que ha encontrado cuando ha ido a buscar la persona
