@@ -5,17 +5,17 @@ import axios from 'axios';
 // Datos para las consultas en GraphQL
 const persons = [
   {
-    name: "Veritechie",
-    phone: "666",
-    street: "Montañas",
-    city: "Yaiza",
-    id: "55555"
+    "name":"Rafita",
+    "phone":"+42 689 98 89",
+    "street":"Montañas",
+    "city":"Yaiza",
+    "id":"222222"
   },
   {
-    name: "Lola",
-    street: "Avenida Principe",
-    city: "Yaiza",
-    id: "55555"
+    "name":"Chuchi",
+    "street":"Avenida Principe",
+    "city":"Yaiza",
+    "id":"11111"
   }
 ]
 
